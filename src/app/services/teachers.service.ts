@@ -12,6 +12,7 @@ import { Observable, Observer, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class TeachersService {
+
   public subject = new Subject<string | ArrayBuffer>();
   private BASE_URI = environment.APIEndpoint;
   public ukrNameRegex = new RegExp('^[А-ЯІҐЄЇ]{1}[а-яіїєґ]*$');
