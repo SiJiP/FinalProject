@@ -18,12 +18,9 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatListModule,
-<<<<<<< HEAD
-=======
   MatOptionModule,
   MatSelectModule,
   MatRadioModule,
->>>>>>> upstream/master
   MatExpansionModule,
 } from '@angular/material';
 

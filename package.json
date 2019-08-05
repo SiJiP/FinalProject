@@ -24,15 +24,13 @@
     "@angular/router": "~8.1.1",
     "@ngrx/store": "^8.1.0",
     "@ngrx/store-devtools": "^8.1.0",
-<<<<<<< HEAD
-=======
     "chart.js": "^2.8.0",
->>>>>>> upstream/master
     "date-fns": "^1.30.1",
     "hammerjs": "^2.0.8",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
+    "ng2-charts": "^2.3.0",
     "ngx-toastr": "^10.0.4",
     "randomcolor": "^0.5.4",
     "rxjs": "~6.4.0",

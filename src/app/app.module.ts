@@ -21,7 +21,7 @@ import { reducers, metaReducers } from './store';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { MatListModule } from '@angular/material';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
-import {ChartsModule} from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts';
 import 'hammerjs';
 import { TeacherCardComponent } from './containers/teachers/teacher-card/teacher-card.component';
 import { ErrorService } from './services/error.service';
