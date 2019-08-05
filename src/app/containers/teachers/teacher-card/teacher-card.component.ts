@@ -27,13 +27,13 @@ export class TeacherCardComponent implements OnInit {
   private subject: Subject<string | ArrayBuffer>;
   constructor(private teachServise: TeachersService) {}
   editTeacher: FormGroup = new FormGroup({
-    firstname: new FormControl(''),
-    lastname: new FormControl(''),
-    patronymic: new FormControl(''),
-    dateOfBirth: new FormControl(''),
-    email: new FormControl(''),
-    phone: new FormControl(''),
-    login: new FormControl('')
+    firstname: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.ukrNameRegex)]),
+    lastname: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.ukrNameRegex)]),
+    patronymic: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.ukrNameRegex)]),
+    dateOfBirth: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.pattern(this.teachServise.emailRegex)]),
+    phone: new FormControl('', [Validators.pattern(this.teachServise.phoneRegex)]),
+    login: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.loginRegex)])
   });
 
   handleFileInput(event) {

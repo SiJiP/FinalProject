@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { Source } from 'webpack-sources';
 
 @Component({
   selector: 'webui-teacher-create',
@@ -16,21 +17,21 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
   ],
 })
 export class TeacherCreateComponent implements OnInit {
-  private fileToUpload;
   private avatarImg = '../../../assets/images/no-user-image.png';
   private subject: Subject<any>;
   private maxAge = this.teachServise.checkAgeDate();
 
+
   constructor(private teachServise: TeachersService) {}
 
   addTeacher: FormGroup = new FormGroup({
-    firstname: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('')]),
-    lastname: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('')]),
-    patronymic: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('')]),
-    dateOfBirth: new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.pattern('')]),
-    email: new FormControl('', [Validators.maxLength(10), Validators.pattern('')]),
-    phone: new FormControl('', [Validators.maxLength(10), Validators.pattern('')]),
-    login: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('')])
+    firstname: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.ukrNameRegex)]),
+    lastname: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.ukrNameRegex)]),
+    patronymic: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.ukrNameRegex)]),
+    dateOfBirth: new FormControl(null, [Validators.required, Validators.pattern('')]),
+    email: new FormControl('', [Validators.pattern(this.teachServise.emailRegex)]),
+    phone: new FormControl('', [Validators.pattern(this.teachServise.phoneRegex)]),
+    login: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.loginRegex)])
   });
   ngOnInit() {
   }
@@ -42,7 +43,7 @@ export class TeacherCreateComponent implements OnInit {
   submitAdd($event): void {
     $event.preventDefault();
     const data = {
-      avatar: this.fileToUpload,
+      avatar: '',
       firstname: this.addTeacher.get('firstname').value,
       lastname: this.addTeacher.get('lastname').value,
       patronymic: this.addTeacher.get('patronymic').value,
