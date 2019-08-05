@@ -1,20 +1,29 @@
 import { TeachersService } from '../../../services/teachers.service';
 import { Teacher } from '../../../models/teacher';
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @Component({
   selector: 'webui-teacher-card',
   templateUrl: './teacher-card.component.html',
-  styleUrls: ['./teacher-card.component.scss']
+  styleUrls: ['./teacher-card.component.scss'],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'uk-UK'},
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
 export class TeacherCardComponent implements OnInit {
   @Input() teacher: Teacher;
-  data: object;
+  private data: object;
   private fileToUpload;
-  avatarImg;
-  private startDate = new Date(1980, 0, 1);
+  private avatarImg;
+  private maxAge = this.teachServise.checkAgeDate();
+
+
   private subject: Subject<string | ArrayBuffer>;
   constructor(private teachServise: TeachersService) {}
   editTeacher: FormGroup = new FormGroup({
@@ -35,11 +44,6 @@ export class TeacherCardComponent implements OnInit {
     });
   }
 
-  generateDate() {
-    const date = new Date(this.editTeacher.get('dateOfBirth').value);
-    date.setHours(date.getHours() + 10);
-    return date.toISOString().slice(0, 10);
-  }
 
   ngOnInit() {
     this.editTeacher.setValue({
@@ -51,9 +55,10 @@ export class TeacherCardComponent implements OnInit {
       phone: this.teacher.phone,
       login: this.teacher.login
     });
-    this.avatarImg = this.teacher.avatar ? this.teacher.avatar : '../../../assets/images/no-user-image.png';
+    this.avatarImg = this.teacher.avatar
+      ? this.teacher.avatar
+      : '../../../assets/images/no-user-image.png';
   }
-
 
   submitEdit($event): void {
     $event.preventDefault();
@@ -62,7 +67,7 @@ export class TeacherCardComponent implements OnInit {
       firstname: this.editTeacher.get('firstname').value,
       lastname: this.editTeacher.get('lastname').value,
       patronymic: this.editTeacher.get('patronymic').value,
-      dateOfBirth: this.generateDate(),
+      dateOfBirth: new Date(this.editTeacher.get('dateOfBirth').value).toISOString().slice(0, 10),
       email: this.editTeacher.get('email').value,
       phone: this.editTeacher.get('phone').value,
       login: this.editTeacher.get('login').value,
@@ -71,9 +76,5 @@ export class TeacherCardComponent implements OnInit {
       id: this.teacher.id
     };
     this.teachServise.editTeacher(this.teacher.id, data);
-  }
-
-  ngOnDestroy(): void {
-   this.teachServise.subject.unsubscribe();
   }
 }

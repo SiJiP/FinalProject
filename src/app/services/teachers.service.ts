@@ -72,4 +72,9 @@ export class TeachersService {
     reader.readAsDataURL(file);
   }
 
+  checkAgeDate() {
+    const checkYear = new Date().getFullYear() - 18;
+    return new Date(checkYear, new Date().getMonth(), new Date().getDate());
+  }
+
 }
