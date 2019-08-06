@@ -34,7 +34,7 @@ export class TeachersComponent implements OnInit {
   private data$: any;
   data: Teacher[];
 
-  constructor(private teachers: TeachersService, private store: Store<{teachers}>) {
+  constructor(private teachers: TeachersService, private store: Store<{}>) {
     this.data$ = this.store.pipe(select(selectTeachersList));
   }
 
