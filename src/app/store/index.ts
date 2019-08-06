@@ -17,7 +17,7 @@ export interface State {
   user: LoginState;
   errors: ErrorState;
   diary: DiaryState;
-  teachers: TeachersState;
+  teachersList: TeachersState;
   chart: ChartState;
 }
 
@@ -25,7 +25,7 @@ export const reducers: ActionReducerMap<State> = {
   user: loginReducer,
   errors: errorReducer,
   diary: diaryReducer,
-  teachers: teachersDataReducer,
+  teachersList: teachersDataReducer,
   chart: chartReducer
 };
 

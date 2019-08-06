@@ -5,7 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { selectTeachersList } from '../../store/teachers/teachers.selector';
+import { selectTeachers } from '../../store/teachers/teachers.selector';
 import {
   animate,
   state,
@@ -35,7 +35,7 @@ export class TeachersComponent implements OnInit {
   data: Teacher[];
 
   constructor(private teachers: TeachersService, private store: Store<{}>) {
-    this.data$ = this.store.pipe(select(selectTeachersList));
+    this.data$ = this.store.pipe(select(selectTeachers));
   }
 
   private columnsToDisplay: string[] = ['firstname', 'lastname', 'dateOfBirth']; // header for TH
@@ -50,7 +50,7 @@ export class TeachersComponent implements OnInit {
   add a pagintator and sorting*/
   getTeachers() {
     this.data$.subscribe(response => {
-      this.data = response;
+      this.data = response.teachersList;
       this.teachersList = new MatTableDataSource<Teacher>(this.data);
       if (this.data !== null) {
         this.teachersList.paginator = this.paginator;
