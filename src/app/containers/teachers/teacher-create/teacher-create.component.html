@@ -16,15 +16,17 @@
         <mat-card-content>
             <mat-form-field class="add-input">
                 <input matInput placeholder="Ім'я" formControlName="firstname" #name required>
-                <mat-error *ngIf="this.addTeacher.get('firstname').invalid">{{this.addTeacher.get('firstname').hasError()}}</mat-error>
+                <mat-error *ngIf="this.addTeacher.get('firstname').invalid">Укр. символи, з великої літери</mat-error>
             </mat-form-field>
 
             <mat-form-field class="add-input">
                 <input matInput placeholder="Прізвище" formControlName="lastname" #surname required>
+                <mat-error *ngIf="this.addTeacher.get('lastname').invalid">Укр. символи, з великої літери</mat-error>
             </mat-form-field>
 
             <mat-form-field class="add-input">
                 <input matInput placeholder="По-батькові" formControlName="patronymic" required>
+                <mat-error *ngIf="this.addTeacher.get('patronymic').invalid">Укр. символи, з великої літери</mat-error>
             </mat-form-field>
 
             <mat-form-field class="add-input">
@@ -32,19 +34,23 @@
                     formControlName="dateOfBirth" required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker startView="year" [startAt]="maxAge"></mat-datepicker>
+                <mat-error *ngIf="this.addTeacher.get('dateOfBirth').invalid">Введіть дату народження</mat-error>
             </mat-form-field>
 
             <mat-form-field class="add-input">
                 <input matInput placeholder="Логін" formControlName="login" required>
+                <mat-error *ngIf="this.addTeacher.get('login').invalid">Мінімум 5 лат. символів</mat-error>
             </mat-form-field>
 
 
             <mat-form-field class="add-input">
                 <input matInput placeholder="Електронна скринька" formControlName="email">
+                <mat-error *ngIf="this.addTeacher.get('email').invalid">Шаблон: example@example.com</mat-error>
             </mat-form-field>
 
             <mat-form-field class="add-input">
                 <input matInput placeholder="Телефон" formControlName="phone">
+                <mat-error *ngIf="this.addTeacher.get('phone').invalid">+380501112233</mat-error>
             </mat-form-field>
 
             <mat-card-actions>

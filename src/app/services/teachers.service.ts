@@ -15,10 +15,7 @@ export class TeachersService {
 
   public subject = new Subject<string | ArrayBuffer>();
   private BASE_URI = environment.APIEndpoint;
-  public ukrNameRegex = new RegExp('^[А-ЯІҐЄЇ]{1}[а-яіїєґ]*$');
-  public emailRegex = /[a-z0-9\.-]{2,16}@[a-z]{2,10}\.[a-z]{2,4}$/i;       // with new RegExp doesnt work this pattern
-  public phoneRegex = /^[+0-9]{10,13}$/;
-  public loginRegex = /^[a-zA-Z0-9]{5,16}$/i;
+
 
   constructor(private http: HttpClient,
               private store: Store<{teachers}>,

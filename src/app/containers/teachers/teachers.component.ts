@@ -33,7 +33,8 @@ import {
 export class TeachersComponent implements OnInit {
   private data$: any;
   data: Teacher[];
-  constructor(private teachers: TeachersService, private store: Store<{}>) {
+
+  constructor(private teachers: TeachersService, private store: Store<{teachers}>) {
     this.data$ = this.store.pipe(select(selectTeachersList));
   }
 
@@ -61,8 +62,6 @@ export class TeachersComponent implements OnInit {
     }
   }
 
-
-
   // function for sorting, trim() remove spaces
   private applyFilter(filterValue: string) {
     this.teachersList.filter = filterValue.trim().toLowerCase();
@@ -71,6 +70,7 @@ export class TeachersComponent implements OnInit {
   ngOnInit() {
     this.getTeachers();
   }
+
   // switcher for table header with ua text
   private dataHeader(header) {
     switch (header) {

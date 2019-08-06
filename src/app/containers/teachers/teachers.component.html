@@ -1,6 +1,7 @@
 <div class="header mat-elevation-z5">
     <h3>Список вчителів</h3>
 </div>
+
 <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Пошук" class="search-input">
 </mat-form-field>
@@ -30,7 +31,6 @@
             </td>
         </ng-container>
 
-
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let teacher; columns: columnsToDisplay;" class="teacher-row"
             [class.teacher-expanded-row]="expandedElement === teacher"
@@ -38,7 +38,6 @@
         </tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="teacher-detail-row"></tr>
     </table>
-
 
     <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
 

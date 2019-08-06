@@ -2,9 +2,9 @@ import { TeachersService } from '../../../services/teachers.service';
 import { Teacher } from '../../../models/teacher';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { ValidationService } from 'src/app/services/validation.service';
 
 @Component({
   selector: 'webui-teacher-card',
@@ -18,22 +18,22 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 })
 export class TeacherCardComponent implements OnInit {
   @Input() teacher: Teacher;
-  private data: object;
-  private fileToUpload;
-  private avatarImg;
+
+  private fileToUpload: string | ArrayBuffer;
+  private avatarImg: string | ArrayBuffer;
   private maxAge = this.teachServise.checkAgeDate();
 
+  constructor(private teachServise: TeachersService,
+              private validServ: ValidationService) {}
 
-  private subject: Subject<string | ArrayBuffer>;
-  constructor(private teachServise: TeachersService) {}
   editTeacher: FormGroup = new FormGroup({
-    firstname: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.ukrNameRegex)]),
-    lastname: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.ukrNameRegex)]),
-    patronymic: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.ukrNameRegex)]),
+    firstname: new FormControl('', [Validators.required, Validators.pattern(this.validServ.ukrNameRegExp)]),
+    lastname: new FormControl('', [Validators.required, Validators.pattern(this.validServ.ukrNameRegExp)]),
+    patronymic: new FormControl('', [Validators.required, Validators.pattern(this.validServ.ukrNameRegExp)]),
     dateOfBirth: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.pattern(this.teachServise.emailRegex)]),
-    phone: new FormControl('', [Validators.pattern(this.teachServise.phoneRegex)]),
-    login: new FormControl('', [Validators.required, Validators.pattern(this.teachServise.loginRegex)])
+    email: new FormControl('', [Validators.pattern(this.validServ.emailRegExp)]),
+    phone: new FormControl('', [Validators.pattern(this.validServ.phoneRegExp)]),
+    login: new FormControl('', [Validators.required, Validators.pattern(this.validServ.loginRegExp)])
   });
 
   handleFileInput(event) {
@@ -44,8 +44,7 @@ export class TeacherCardComponent implements OnInit {
     });
   }
 
-
-  ngOnInit() {
+  setDefaultValue(): void {
     this.editTeacher.setValue({
       firstname: this.teacher.firstname,
       lastname: this.teacher.lastname,
@@ -77,4 +76,10 @@ export class TeacherCardComponent implements OnInit {
     };
     this.teachServise.editTeacher(this.teacher.id, data);
   }
+
+  ngOnInit() {
+   this.setDefaultValue();
+  }
+
+
 }
